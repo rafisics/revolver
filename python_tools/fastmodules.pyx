@@ -9,8 +9,8 @@ cdef struct PARTICLE:
   int nadj_count
   int *adj
 
-def mult_kx(np.ndarray [np.complex128_t, ndim=3] deltaout, np.ndarray [np.complex128_t, ndim=3] delta,
-            np.ndarray [np.float64_t, ndim=1] k, double bias):
+def mult_kx(np.ndarray[np.complex128_t, ndim=3] deltaout, np.ndarray[np.complex128_t, ndim=3] delta,
+            np.ndarray[np.float64_t, ndim=1] k, double bias):
     cdef int N = delta.shape[0]
     cdef int ix,iy,iz
     for ix in range(N):
@@ -19,8 +19,8 @@ def mult_kx(np.ndarray [np.complex128_t, ndim=3] deltaout, np.ndarray [np.comple
           deltaout[ix,iy,iz] = delta[ix,iy,iz] * (-1.0j) * k[ix] / bias
     return deltaout
 
-def mult_ky(np.ndarray [np.complex128_t, ndim=3] deltaout, np.ndarray [np.complex128_t, ndim=3] delta,
-            np.ndarray [np.float64_t, ndim=1] k, double bias):
+def mult_ky(np.ndarray[np.complex128_t, ndim=3] deltaout, np.ndarray[np.complex128_t, ndim=3] delta,
+            np.ndarray[np.float64_t, ndim=1] k, double bias):
     cdef int N = delta.shape[0]
     cdef int ix,iy,iz
     for ix in range(N):
@@ -29,8 +29,8 @@ def mult_ky(np.ndarray [np.complex128_t, ndim=3] deltaout, np.ndarray [np.comple
           deltaout[ix,iy,iz] = delta[ix,iy,iz] * (-1.0j) * k[iy] / bias
     return deltaout
 
-def mult_kz(np.ndarray [np.complex128_t, ndim=3] deltaout, np.ndarray [np.complex128_t, ndim=3] delta,
-            np.ndarray [np.float64_t, ndim=1] k, double bias):
+def mult_kz(np.ndarray[np.complex128_t, ndim=3] deltaout, np.ndarray[np.complex128_t, ndim=3] delta,
+            np.ndarray[np.float64_t, ndim=1] k, double bias):
     cdef int N = delta.shape[0]
     cdef int ix,iy,iz
     for ix in range(N):
@@ -39,8 +39,8 @@ def mult_kz(np.ndarray [np.complex128_t, ndim=3] deltaout, np.ndarray [np.comple
           deltaout[ix,iy,iz] = delta[ix,iy,iz] * (-1.0j) * k[iz] / bias
     return deltaout
 
-def mult_norm(np.ndarray [np.complex128_t, ndim=3] rhoout, np.ndarray [np.complex128_t, ndim=3] rhoin,
-             np.ndarray [np.float64_t, ndim=3] norm):
+def mult_norm(np.ndarray[np.complex128_t, ndim=3] rhoout, np.ndarray[np.complex128_t, ndim=3] rhoin,
+             np.ndarray[np.float64_t, ndim=3] norm):
     cdef int N = rhoin.shape[0]
     cdef int ix,iy,iz
     for ix in range(N):
@@ -49,8 +49,8 @@ def mult_norm(np.ndarray [np.complex128_t, ndim=3] rhoout, np.ndarray [np.comple
           rhoout[ix,iy,iz] = rhoin[ix,iy,iz] * norm[ix,iy,iz]
     return rhoout
 
-def divide_k2(np.ndarray [np.complex128_t, ndim=3] deltaout, np.ndarray [np.complex128_t, ndim=3] delta,
-              np.ndarray [np.float64_t, ndim=1] k):
+def divide_k2(np.ndarray[np.complex128_t, ndim=3] deltaout, np.ndarray[np.complex128_t, ndim=3] delta,
+              np.ndarray[np.float64_t, ndim=1] k):
     cdef int N = delta.shape[0]
     cdef int ix,iy,iz
     cdef double kx,ky,kz,k2
@@ -67,11 +67,11 @@ def divide_k2(np.ndarray [np.complex128_t, ndim=3] deltaout, np.ndarray [np.comp
     return deltaout
 
 def allocate_gal_cic(
-    np.ndarray [np.float64_t, ndim=3] delta,
-    np.ndarray [np.float64_t, ndim=1] x,
-    np.ndarray [np.float64_t, ndim=1] y,
-    np.ndarray [np.float64_t, ndim=1] z,
-    np.ndarray [np.float64_t, ndim=1] w,
+    np.ndarray[np.float64_t, ndim=3] delta,
+    np.ndarray[np.float64_t, ndim=1] x,
+    np.ndarray[np.float64_t, ndim=1] y,
+    np.ndarray[np.float64_t, ndim=1] z,
+    np.ndarray[np.float64_t, ndim=1] w,
     int npart,
     double xmin,
     double ymin,
@@ -151,8 +151,8 @@ def allocate_gal_cic(
 
   return delta
 
-def normalize_delta_survey(np.ndarray [np.complex128_t, ndim=3] delta, np.ndarray [np.float64_t, ndim=3] rhog,
-                        np.ndarray [np.float64_t, ndim=3] rhor, double alpha, double ran_min):
+def normalize_delta_survey(np.ndarray[np.complex128_t, ndim=3] delta, np.ndarray[np.float64_t, ndim=3] rhog,
+                        np.ndarray[np.float64_t, ndim=3] rhor, double alpha, double ran_min):
 
   cdef int N = rhog.shape[0]
   cdef int ix, iy, iz
@@ -166,7 +166,7 @@ def normalize_delta_survey(np.ndarray [np.complex128_t, ndim=3] delta, np.ndarra
 
   return delta
 
-def normalize_delta_box(np.ndarray [np.complex128_t, ndim=3] delta, np.ndarray [np.float64_t, ndim=3] rhog,
+def normalize_delta_box(np.ndarray[np.complex128_t, ndim=3] delta, np.ndarray[np.float64_t, ndim=3] rhog,
                         int npart):
 
   cdef int N = rhog.shape[0]
@@ -178,8 +178,8 @@ def normalize_delta_box(np.ndarray [np.complex128_t, ndim=3] delta, np.ndarray [
 
   return delta
 
-def normalize_rho_survey(np.ndarray [np.float64_t, ndim=3] rho_out, np.ndarray [np.float64_t, ndim=3] rhog,
-                        np.ndarray [np.float64_t, ndim=3] rhor, double alpha, double ran_min):
+def normalize_rho_survey(np.ndarray[np.float64_t, ndim=3] rho_out, np.ndarray[np.float64_t, ndim=3] rhog,
+                        np.ndarray[np.float64_t, ndim=3] rhor, double alpha, double ran_min):
 
   cdef int N = rhog.shape[0]
   cdef int ix, iy, iz
@@ -193,7 +193,7 @@ def normalize_rho_survey(np.ndarray [np.float64_t, ndim=3] rho_out, np.ndarray [
 
   return rho_out
 
-def normalize_rho_box(np.ndarray [np.float64_t, ndim=3] rhog, int npart):
+def normalize_rho_box(np.ndarray[np.float64_t, ndim=3] rhog, int npart):
 
   cdef int N = rhog.shape[0]
   cdef int ix, iy, iz
@@ -204,7 +204,7 @@ def normalize_rho_box(np.ndarray [np.float64_t, ndim=3] rhog, int npart):
 
   return rhog
 
-def survey_mask(np.ndarray [np.int_t, ndim=1] mask, np.ndarray [np.float64_t, ndim=3] rhor, double ran_min):
+def survey_mask(np.ndarray[np.int64_t, ndim=1] mask, np.ndarray[np.float64_t, ndim=3] rhor, double ran_min):
 
   cdef int N = rhor.shape[0]
   cdef int ix, iy, iz
@@ -216,8 +216,8 @@ def survey_mask(np.ndarray [np.int_t, ndim=1] mask, np.ndarray [np.float64_t, nd
 
   return mask
 
-def survey_cuts_logical(np.ndarray [np.int_t, ndim=1] out, np.ndarray [np.float64_t, ndim=1] veto,
-                        np.ndarray [np.float64_t, ndim=1] redshift, double zmin, double zmax):
+def survey_cuts_logical(np.ndarray[np.int64_t, ndim=1] out, np.ndarray[np.float64_t, ndim=1] veto,
+                        np.ndarray[np.float64_t, ndim=1] redshift, double zmin, double zmax):
 
   cdef int N = redshift.shape[0]
   cdef int i
@@ -229,8 +229,8 @@ def survey_cuts_logical(np.ndarray [np.int_t, ndim=1] out, np.ndarray [np.float6
 
   return out
 
-def voxelvoid_cuts(np.ndarray [np.int_t, ndim=1] select, np.ndarray [np.int_t, ndim=1] mask,
-                   np.ndarray [np.float64_t, ndim=2] rawvoids, double min_dens_cut):
+def voxelvoid_cuts(np.ndarray[np.int64_t, ndim=1] select, np.ndarray[np.int64_t, ndim=1] mask,
+                   np.ndarray[np.float64_t, ndim=2] rawvoids, double min_dens_cut):
 
   cdef int N = rawvoids.shape[0]
   cdef int i, vox
@@ -244,8 +244,8 @@ def voxelvoid_cuts(np.ndarray [np.int_t, ndim=1] select, np.ndarray [np.int_t, n
 
   return select
 
-def voxelcluster_cuts(np.ndarray [np.int_t, ndim=1] select, np.ndarray [np.int_t, ndim=1] mask,
-                   np.ndarray [np.float64_t, ndim=2] rawclusters, double max_dens_cut):
+def voxelcluster_cuts(np.ndarray[np.int64_t, ndim=1] select, np.ndarray[np.int64_t, ndim=1] mask,
+                   np.ndarray[np.float64_t, ndim=2] rawclusters, double max_dens_cut):
 
   cdef int N = rawclusters.shape[0]
   cdef int i, vox
@@ -258,8 +258,8 @@ def voxelcluster_cuts(np.ndarray [np.int_t, ndim=1] select, np.ndarray [np.int_t
 
   return select
 
-def get_member_densities(np.ndarray [np.float64_t, ndim=1] member_dens, np.ndarray [np.int_t, ndim=1] voxels,
-                         np.ndarray [np.float64_t, ndim=1] rho):
+def get_member_densities(np.ndarray[np.float64_t, ndim=1] member_dens, np.ndarray[np.int64_t, ndim=1] voxels,
+                         np.ndarray[np.float64_t, ndim=1] rho):
 
   cdef int N = len(voxels)
   cdef int i
