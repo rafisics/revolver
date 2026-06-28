@@ -1,6 +1,4 @@
-from distutils.core import setup
-from distutils.extension import Extension
-from Cython.Distutils import build_ext
+from setuptools import setup, Extension
 from Cython.Build import cythonize
 import numpy
 
@@ -17,7 +15,6 @@ ext_modules = [
 
 setup(
     name="fastmodules",
-    cmdclass={"build_ext": build_ext},
     ext_modules=cythonize(
         ext_modules,
         compiler_directives={'language_level': '3'},

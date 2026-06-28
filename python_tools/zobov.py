@@ -116,7 +116,7 @@ class ZobovVoids:
                     sys.stdout.flush()
                     # all_indices = np.arange(len(self.tracers))
                     # bad_inds = np.where(mask[pixels] == 0)[0]
-                    # good_inds = all_indices[np.logical_not(np.in1d(all_indices, bad_inds))]
+                    # good_inds = all_indices[np.logical_not(np.isin(all_indices, bad_inds))]
                     # self.tracers = self.tracers[good_inds, :]
 
                 # effective sky fraction
@@ -1043,9 +1043,9 @@ class ZobovVoids:
                         while num_zones_to_add > 0 and add_more:  # more zones can potentially be added
                             zonestoadd = np.asarray(voidline[pos + 2:pos + num_zones_to_add + 2], dtype=int)
                             dens = rval * coredens
-                            rsublist = rlist[np.in1d(vid, zonestoadd)]
-                            volsublist = vollist[np.in1d(vid, zonestoadd)]
-                            partsublist = numpartlist[np.in1d(vid, zonestoadd)]
+                            rsublist = rlist[np.isin(vid, zonestoadd)]
+                            volsublist = vollist[np.isin(vid, zonestoadd)]
+                            partsublist = numpartlist[np.isin(vid, zonestoadd)]
                             if dont_merge or (use_link_density_threshold and dens > link_density_threshold) or \
                                     (use_r_threshold > 0 and max(rsublist) > r_threshold):
                                 # cannot add these zones
@@ -1067,9 +1067,9 @@ class ZobovVoids:
                         counted_zones = np.append(counted_zones, zonelist)
                         if use_stripping:
                             member_ids = np.logical_and(densities[:] < strip_density_threshold,
-                                                        np.in1d(zonedata, zonelist))
+                                                        np.isin(zonedata, zonelist))
                         else:
-                            member_ids = np.in1d(zonedata, zonelist)
+                            member_ids = np.isin(zonedata, zonelist)
 
                         # if using void "stripping" functionality, recalculate void volume and number of particles
                         if use_stripping:
@@ -1077,7 +1077,7 @@ class ZobovVoids:
                             total_num_parts = len(vols[member_ids])
 
                         # check if the void is edge-contaminated (useful for observational surveys only)
-                        if 1 in edgelist[np.in1d(vid, zonestoadd)]:
+                        if 1 in edgelist[np.isin(vid, zonestoadd)]:
                             edge_flag = np.append(edge_flag, 1)
                         else:
                             edge_flag = np.append(edge_flag, 0)
@@ -1385,9 +1385,9 @@ class ZobovVoids:
 
                 # get the member particles for these zones
                 if use_stripping:
-                    member_ids = np.logical_and(densities[:] < strip_density_threshold, np.in1d(zonedata, member_zones))
+                    member_ids = np.logical_and(densities[:] < strip_density_threshold, np.isin(zonedata, member_zones))
                 else:  # stripDens functionality disabled
-                    member_ids = np.in1d(zonedata, member_zones)
+                    member_ids = np.isin(zonedata, member_zones)
                 member_x = positions[member_ids, 0] - positions[int(list_array[i, 1]), 0]
                 member_y = positions[member_ids, 1] - positions[int(list_array[i, 1]), 1]
                 member_z = positions[member_ids, 2] - positions[int(list_array[i, 1]), 2]
@@ -1599,9 +1599,9 @@ class ZobovVoids:
                         while num_zones_to_add > 0 and add_more:
                             zonestoadd = np.asarray(clustline[pos + 2:pos + num_zones_to_add + 2], dtype=int)
                             dens = coredens / rval
-                            rsublist = rlist[np.in1d(vid, zonestoadd)]
-                            volsublist = vollist[np.in1d(vid, zonestoadd)]
-                            partsublist = numpartlist[np.in1d(vid, zonestoadd)]
+                            rsublist = rlist[np.isin(vid, zonestoadd)]
+                            volsublist = vollist[np.isin(vid, zonestoadd)]
+                            partsublist = numpartlist[np.isin(vid, zonestoadd)]
                             if dont_merge or (use_link_density_threshold and dens < link_density_threshold) or \
                                     (use_r_threshold and max(rsublist) > r_threshold):
                                 # cannot add these zones
@@ -1623,12 +1623,12 @@ class ZobovVoids:
                         counted_zones = np.append(counted_zones, zonelist)
                         member_ids = np.logical_and(
                             np.logical_or(use_stripping, densities[:] > strip_density_threshold),
-                            np.in1d(zonedata, zonelist))
+                            np.isin(zonedata, zonelist))
                         if use_stripping:  # need to recalculate total_vol and total_num_parts after stripping
                             total_vol = np.sum(vols[member_ids])
                             total_num_parts = len(vols[member_ids])
 
-                        if 1 in edgelist[np.in1d(vid, zonestoadd)]:
+                        if 1 in edgelist[np.isin(vid, zonestoadd)]:
                             edge_flag = np.append(edge_flag, 1)
                         else:
                             edge_flag = np.append(edge_flag, 0)
@@ -1697,9 +1697,9 @@ class ZobovVoids:
 
                 # get the member particles for these zones
                 if use_stripping:
-                    member_ids = np.logical_and(densities[:] > strip_density_threshold, np.in1d(zonedata, member_zones))
+                    member_ids = np.logical_and(densities[:] > strip_density_threshold, np.isin(zonedata, member_zones))
                 else:  # stripDens functionality disabled
-                    member_ids = np.in1d(zonedata, member_zones)
+                    member_ids = np.isin(zonedata, member_zones)
                 member_vol = vols[member_ids]
                 member_dens = densities[member_ids]
 
